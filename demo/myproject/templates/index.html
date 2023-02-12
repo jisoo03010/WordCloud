@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Cloud</title>
+    <link href="{{ url_for('static', filename='common.css') }}" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="{{ url_for('static', filename='common.js') }}"> </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="searchBox">
+            <div class="input">
+                <div class="inputBox1">
+                    <input type="text" placeholder="키워드를 입력해주세요!" id="inputText">
+                </div>
+                <div id="inputBox2">
+                    <img src="../static/images/searchIcon.png" alt="검색 아이콘">
+                </div>
+            </div>
+        </div>
+
+        <div class="output">
+            <div id="outputDataBox">
+                그래프 들어가는 박스입니다.sdfs
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
