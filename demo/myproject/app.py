@@ -70,11 +70,10 @@ def selectDB():
     key = kyeword['keyword']
     print(key)
     ret = []
-    db = pymysql.connect(host='localhost', user='root',
-                            port=3307,password='1234', charset='utf8', db='mydb')
+    db = pymysql.connect(host='localhost', user='',
+                            port=,password='', charset='utf8', db='')
     curs = db.cursor()
 
-   
     sqlInsert =  """ 
             SELECT ChangeContents
             FROM  mydb.CrawlingNaverArticles
