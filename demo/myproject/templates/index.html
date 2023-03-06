@@ -7,27 +7,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Word Cloud</title>
     <link href="{{ url_for('static', filename='common.css') }}" rel="stylesheet">
-
+    <link rel="icon" href="../static/images/background_img.webp"/>
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script src="{{ url_for('static', filename='common.js') }}"> </script>
 </head>
 
 <body>
-    <div class="container">
-        <div class="searchBox">
-            <div class="input">
-                <div class="inputBox1">
-                    <input type="text" placeholder="키워드를 입력해주세요!" id="inputText">
+    <div class="container_box">
+        <img src="../static/images/background_img.webp" class="background_img" alt="">
+        <div class="contents">
+           
+           
+            <div class="container">
+               
+                <div class="output">
+                  
+                    <div id="dis">  
+                        <div id="tableDataIcon">
+                            <img src="../static/images/tableDataIcon.png" alt="">
+                            <div>WordCloud Data</div> 
+                        </div>
+                        <div class="topsearch_box">
+                            <div class="searchBox">
+                                <div class="input">
+                                    <div class="inputBox1">
+                                        <input type="text" placeholder="키워드를 입력해주세요!" id="inputText">
+                                    </div>
+                                    <div id="inputBox2">
+                                        <a href="#">
+                                            <img src="../static/images/search_FILL0_wght400_GRAD-25_opsz40.svg" alt="검색 아이콘">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="setting_box">
+                            <div class="setting">
+                                <table id="tb" border="1">
+                                    <tr colspan ="2">
+                                        <td>구분</td>
+                                        <td>( 키워드 / 빈도 수 )</td>
+                                    </tr>
+                                </table>
+                                <br>
+                                <br>
+                            </div>
+                            <div class="running">
+                                <img src="../static/images/Visibility.png" alt="" id="ie">
+                                <input type="button" value="보기" id="go">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="outputDataBox">
+                        <img src="../static/images/loading.svg" alt="wordcloud 출력값" id="wordcloud_img">
+                    </div>
+    
+    
                 </div>
-                <div id="inputBox2">
-                    <img src="../static/images/searchIcon.png" alt="검색 아이콘">
-                </div>
-            </div>
-        </div>
-
-        <div class="output">
-            <div id="outputDataBox">
-                그래프 들어가는 박스입니다.sdfs
             </div>
         </div>
     </div>
