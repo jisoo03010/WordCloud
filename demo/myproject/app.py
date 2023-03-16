@@ -74,7 +74,7 @@ def selectDB():
     print(key)
     ret = []
     db = pymysql.connect(host='master', user='root',
-                            port=3306,password='', charset='utf8', db='mydb')
+                            port=3306,password='1234', charset='utf8', db='mydb')
     curs = db.cursor()
 
    
