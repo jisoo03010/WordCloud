@@ -1,21 +1,24 @@
-from bs4 import BeautifulSoup
-from flask import Flask, render_template, request
-import pymysql
-import time
-from flask_sqlalchemy import SQLAlchemy
-from konlpy.tag import Okt
-import numpy as np  # 이미지 데이터를 다루기 위해
-import pandas as pd  # 데이터를 다루기 위한 라이브러리
-from wordcloud import WordCloud
-from PIL import Image  # 이미지를 위한 라이브러리
-import os
-from collections import Counter
-import matplotlib.pyplot as plt
+#from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+import re
 
+import numpy as np  # 이미지 데이터를 다루기 위해
+import pandas as pd  # 데이터를 다루기 위한 라이브러리
+import time
+from PIL import Image  # 이미지를 위한 라이브러리
+from difflib import SequenceMatcher
+from flask import Flask, render_template, request
+import pymysql
+from flask_sqlalchemy import SQLAlchemy
+from wordcloud import WordCloud
+import os
+from collections import Counter
+import matplotlib.pyplot as plt
+from konlpy.tag import *
+from nltk.stem import PorterStemmer, LancasterStemmer
 
 #from sklearn.feature_extraction.text import CountVectorizer
 db = SQLAlchemy()
@@ -34,8 +37,8 @@ def index():
 # 크롤링 데이터를 insert하는 db 부분 ============================
 def insertDB(k, t, c1, c2, r):
     ret = []
-    db = pymysql.connect(host='localhost', user='root',
-                            port=,password='', charset='utf8', db='')
+    db = pymysql.connect(host='127.0.0.1', user='root',
+                            port=3310,password='1234', charset='utf8', db='mydb')
     curs = db.cursor()
     sqlInsert = """
         insert into mydb.CrawlingNaverArticles(KeyWord, Title, ChangeContents, Contents, Registration_Date ) values( '{KeyWord1}' ,  '{Title1}', '{Contents1}', '{Contents2}',  '{Registration_Date1}' );
@@ -48,9 +51,9 @@ def insertDB(k, t, c1, c2, r):
 # 워드 클라우드 부분 ============================
 
 def word(text):
-   # print("======== 워드클라우드 시작 dd2=======")
-    wordcloud = WordCloud(font_path="./static/malgun.ttf",max_words=100, width = 800 , height = 400 ,background_color='white').generate(text)
     
+    wordcloud = WordCloud(font_path="./static/malgun.ttf",max_words=100, width = 800 , height = 400 ,background_color='white').generate(text)
+
     plt.figure()
     plt.axis('off')
     plt.imshow(wordcloud, interpolation='bilinear')
@@ -70,13 +73,14 @@ def selectDB():
     key = kyeword['keyword']
     print(key)
     ret = []
-    db = pymysql.connect(host='localhost', user='',
-                            port=,password='', charset='utf8', db='')
+    db = pymysql.connect(host='master', user='root',
+                            port=3306,password='1234', charset='utf8', db='mydb')
     curs = db.cursor()
 
+   
     sqlInsert =  """ 
             SELECT ChangeContents
-            FROM  mydb.CrawlingNaverArticles
+            FROM  mydb.crawlingnaverarticles
             WHERE Contents LIKE '%{keyword1}%';
             """.format(keyword1=key)
     
@@ -85,33 +89,51 @@ def selectDB():
   
 
     for i in curs:
-        s = ''.join(map(str, i))
+        s = ''.join(map(str, i)).replace("\n", " ")
         ret.append(s)
-    
+
+
     text = ''.join(list(set(ret)))
+    
     last_arr = []
     arr = text.split(" ") 
+    deleteArray  = ["통해", "기준", "계획", "당시", "앞서", "올해", "진행", "제공", "지난해", "지난달","다른","현재", "관련","모두","가장", "라며", "이번","또한","거나", "이후", "우리", "지금","연합뉴스", "예상", "로서", "대해" , "사진", "오늘", "최근", "지난", "위해", "때문", "대한"] 
     
     for i in arr:
-        if i == "통해" or i == "지난해"  or i == "예상" or i == "사진"  or i == "오늘" or i == "최근" or i == "지난" or i == "위해"or i == "때문" or i == "대한" or i == "대해" or i == "이후" or i == "관련" or i == "라며" or i == "이번" or i == "또한" or i == "거나" :
+        if i in deleteArray:
             continue
         else:
             s = ''.join(map(str, i))
             last_arr.append(s)
-            
-    
+        
     text1 = ' '.join(last_arr)
-    
+    print(text1)
+    """
+    twt = Twitter()
+    worss = twt.pos(text1)
+    text_arr = []
+    for i in worss:
+        if  i[0] == "punctuation" and  i[0] == "Number" and i[0] == "Josa" and i[0] == "Foreign":
+            continue
+        elif i[0] == "@" or len(i[0]) > 1:
+            text_arr.append(i[0])
+
+
+
+    text2 = ''.join(text_arr).replace("\n", "")
+    print(text2)
+"""
     word(text1) 
+    
     strings = text1.split()
     
     test_list2 = []
     social_news_word_count = Counter(strings)
-    for i in social_news_word_count.most_common(50):
+    for i in social_news_word_count.most_common(51):
         test_list2.append(i)
 
-
-
+        
+    del test_list2[0]  
 
     db.commit()
     db.close()

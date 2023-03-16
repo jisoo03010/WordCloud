@@ -2,7 +2,7 @@ $(document).ready(function () {
    for(let i =0; i< 50; i++){
         $('#tb').append('<tr><td class="nth_number"></td><td class="data"></td></tr>');
    }
-    for(let i = 0; i < $('.nth_number').length; i++){
+    for(let i =0; i < $('.nth_number').length; i++){
         $('.nth_number')[i].innerText = i + "위"
     }
     
@@ -31,8 +31,8 @@ $(document).ready(function () {
                         $('.data')[i].innerText = a
                         asdf.push(a)
                     }
+                    console.log(asdf)
                     localStorage.setItem("key", asdf);
-                    console.log($("#go").val()  == "보기")
                     setInterval(function(){
                         $("#go").css("background-color", "#00ef01")
                         if ($("#go").val() == "보기") {
