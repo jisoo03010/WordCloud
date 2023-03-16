@@ -38,7 +38,7 @@ def index():
 def insertDB(k, t, c1, c2, r):
     ret = []
     db = pymysql.connect(host='127.0.0.1', user='root',
-                            port=3310,password='1234', charset='utf8', db='mydb')
+                            port=3306,password='', charset='utf8', db='mydb')
     curs = db.cursor()
     sqlInsert = """
         insert into mydb.CrawlingNaverArticles(KeyWord, Title, ChangeContents, Contents, Registration_Date ) values( '{KeyWord1}' ,  '{Title1}', '{Contents1}', '{Contents2}',  '{Registration_Date1}' );
@@ -74,7 +74,7 @@ def selectDB():
     print(key)
     ret = []
     db = pymysql.connect(host='master', user='root',
-                            port=3306,password='1234', charset='utf8', db='mydb')
+                            port=3306,password='', charset='utf8', db='mydb')
     curs = db.cursor()
 
    
