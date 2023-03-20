@@ -23,13 +23,7 @@
      <code>docker run -it --rm --name [저장할 컨테이너의 이름] -e  MYSQL_ROOT_PASSWORD=1234 -p 3306:3306 [다운받은 mysql 이미지]  --character-set->server=utf8mb4 --collation-server=utf8mb4_unicode_ci </code>  
 >   * __web server__ :    
       <code>docker run -it --rm  -p 0.0.0.0:8080:9988/tcp --name [저장할 컨테이너의 이름] --link [mysql server가 올라간 container 이름]:master [다운받은 flask web server]:[tag] </code>
->>  __💥주의 사항💥__   
->> __mysql server container 안에서 실행시켜야 할 필수 명령어__
->> 1. mysql -u root -p  [mysql 접근] -> 비밀번호 입력후 들어가기
->> 2. show databases;  ["mydb" 데이터베이스가 있는지 확인하기] 
->> 3. create database mydb; [없다면 생성하기]
->> 4. use mydb [ mydb 사용 지정하기]
->> 5. source /tmp/word_cloud_sql_dump_file.sql [이전에 생성했던 sql import 하기] 
+
 
 ## 
 > __주요 기능__
