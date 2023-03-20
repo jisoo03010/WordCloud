@@ -15,18 +15,18 @@
 >      * docker hub url : https://hub.docker.com/search?q=jisoo040310
 >    * docker image 가져오는 명령어 
 >        * mysql   
-           <code> docker pull jisoo040310/mysql_last_image:latest</code>(:latest <- 생략가능)  
+           <code> docker pull jisoo040310/mysql_image:latest</code>(:latest <- 생략가능)  
 >        * web server  
            <code> docker pull jisoo040310/last_dockerweb_server:latest</code>(:latest <- 생략가능)
 > * __docker 실행 명령어__ 
 >   * __db server__ :  
-     <code>docker run -it --rm --name [저장할 컨테이너의 이름] -e  MYSQL_ROOT_PASSWORD=1234 -p 3306:3306 [다운받은 mysql 이미지]  --character-set->server=utf8mb4 --collation-server=utf8mb4_unicode_ci </code>  
+     <code>docker run -it --rm --name db_server_container -p 3306:3306 jisoo040310/mysql_image </code>  
 >>  __💥주의 사항💥__   
 >> __mysql db server "docker run"명령어 실행 후에 해줘야할 몇가지__
->> 1. use mydb [ mydb 사용 지정하기]
->> 2. source /tmp/word_cloud_sql_dump_file.sql [이전에 생성했던 sql import 하기] 
+>> 1. use mydb [사용 지정]
+>> 2. source /tmp/word_cloud_sql_dump_file.sql [sql 파일 복원] 
 >   * __web server__ :    
-      <code>docker run -it --rm  -p 0.0.0.0:8080:9988/tcp --name [저장할 컨테이너의 이름] --link [mysql server가 올라간 container 이름]:master [다운받은 flask web server]:[tag] </code>
+      <code>docker run -it --rm -p 8080:9988 --name web_server --link db_server_container:master jisoo040310/last_dockerweb_server </code>
 
 
 ## 
