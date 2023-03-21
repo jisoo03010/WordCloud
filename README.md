@@ -40,9 +40,7 @@
 
 ## 
 > __sw 설계도__   
-![image](https://user-images.githubusercontent.com/73218962/226517545-2a664130-479a-45bd-bc6d-61788f35eb52.png)
-
-
+![image](https://user-images.githubusercontent.com/73218962/226518003-68803829-329b-45c2-a2a7-21d2b0e81e70.png)
 
 
 
