@@ -21,10 +21,6 @@
 > * __docker 실행 명령어__ 
 >   * __db server__ :  
      <code>docker run -it --rm --name db_server_container -p 3306:3306 jisoo040310/mysql_image </code>  
->>  __💥주의 사항💥__   
->> __mysql db server "docker run"명령어 실행 후에 해줘야할 몇가지__
->> 1. use mydb [사용 지정]
->> 2. source /tmp/word_cloud_sql_dump_file.sql [sql 파일 복원] 
 >   * __web server__ :    
       <code>docker run -it --rm -p 8080:9988 --name web_server --link db_server_container:master jisoo040310/last_dockerweb_server </code>
 
