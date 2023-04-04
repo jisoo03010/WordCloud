@@ -1,8 +1,12 @@
 # WordCloud
 
-
+## version 0.1 - ui image
 ![image](https://user-images.githubusercontent.com/73218962/225527052-467be0a3-4f7a-429c-a984-1fedf1aed94d.png)
-                               
+              
+## version 0.2 - ui image    
+![image](https://user-images.githubusercontent.com/73218962/229707387-0acd4174-2ded-4aee-9a34-34fe0822d49f.png)
+
+
 > ### 프로젝트 소개  
 > __파이썬에서 제공하는 word cloud 모듈을 활용하여 개발을 진행하였다.   
 > 모듈을 통해 word cloud를 개발함으로써 메타 데이터(네이버 기사 크롤링)에서 얻어진 태그들을 분석하여 중요도나 인기도 등을 고려하여 시각적으로 늘어놓아 표시하였다.
