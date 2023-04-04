@@ -1,0 +1,260 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+table {
+    border: 1px solid rgb(255, 255, 255);
+    border-collapse: collapse;
+    text-align: center;
+}
+
+tr>td:nth-child(1) {
+    width: 13%;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+}
+
+tr>td:nth-child(2) {
+    width: 49%;
+}
+
+td {
+    color: rgb(0, 0, 0);
+    padding: 5px;
+}
+
+.container_box {
+    width: 100vw;
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.background_img {
+    width: 100vw;
+    height: 100vh;
+
+}
+
+.contents {
+    position: absolute;
+    top: 50%;
+    width: 62vw;
+    height: 80vh;
+    left: 50%;
+    justify-content: space-between;
+    transform: translate(-50%, -50%);
+}   
+#tableDataIcon{    
+    width: 100%;
+    height: 0%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    top: 9%;
+    left: 7%;
+}
+#tableDataIcon>img{
+    width: 12%;
+    margin-right: 5%;
+}
+#tableDataIcon>div{
+    color: rgb(0, 0, 0);
+    font-size: 1.1vw;
+}
+.topsearch_box {
+    margin: 0 auto;
+    display: flex;
+    width: 100%;
+    position: relative;
+    height: 9%;
+    justify-content: space-between;
+    top: 16%;
+    left: 2.5%;
+}
+
+.container {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffffad;
+    box-shadow: 0px 19px 42px -19px #6c6c6c;
+
+}
+
+
+
+.searchBox {
+    position: relative;
+    width: 100%;
+    height: 77%;
+    border-radius: 6px;
+    box-shadow: -20px 4px 41px -21px #6c6c6c;
+    background-color: rgb(255 255 255);
+}
+
+.input {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+}
+
+.inputBox1 {
+    width: 100%;
+    height: 100%;
+}
+
+.inputBox1>input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding-left: 5%;
+    outline: none;
+    font-size: 15px;
+}
+
+#inputBox2 {
+    width: 20%;
+    position: relative;
+    height: 100%;
+}
+
+#inputBox2>a>img {
+    position: absolute;
+    width: 61%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.output {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    justify-content: space-around;
+}
+
+#outputDataBox {
+    position: relative;
+    top: 1.4%;
+    width: 76%;
+    height: 97%;
+    background-color: white;
+}
+
+#outputDataBox>img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+}
+#dis{       width: 21%;
+    height: 90%;
+}
+#setting_box {
+    width: 100%;
+    height: 83%;
+    position: relative;
+    top: 17%;
+    left: 2.5%;
+}
+
+.setting::-webkit-scrollbar {
+    width: 10px;
+}
+
+.setting::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+}
+
+.setting::-webkit-scrollbar-track {
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 5px white;
+}
+
+.setting {
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scroll-behavior: smooth;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff29;
+}
+
+#countNumber_c {
+    position: absolute;
+    top: 90%;
+    left: 2%;
+    width: 100%;
+    height: 30%;
+}
+
+#countNumber {
+    width: 60%;
+    height: 20%;
+    padding-left: 2%;
+}
+
+.running {
+    width: 100%;
+    height: 21%;
+    margin: 0 auto;
+    position: relative;
+}
+
+#go {
+    position: absolute;
+    width: 77%;
+    top: 44%;
+    height: 35%;
+    align-items: center;
+    border-radius: 12px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    left: 50%;
+    font-size: 0.8vw;
+    transform: translate(-50%, -50%);
+}
+#ie{    filter: invert(100%) sepia(0%) saturate(1426%) hue-rotate(53deg) brightness(105%) contrast(98%);
+    position: absolute;
+    width: 11%;
+    top: 34%;
+    z-index: 99;
+    left: 24%;}
+
+
+
+
+/*  로딩 gif  */
+#loading_bar_box{
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    background-color: rgba(0, 0, 0, 0.703);
+}
+
+#loading_bar_box > img{
+    position: absolute;
+    width: 5vw;
+    left: 50%;
+    top: 52%;
+    transform: translate(-50%, -50%);
+}
