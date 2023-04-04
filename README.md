@@ -12,7 +12,7 @@
 > 또한 단어의 크기는 많이 언급되는 순서대로 한눈에 들어올 수 있게 하였다.__  
 
 ## 
-> __ wordcloud 0.1ver 요구 사항__ 
+> __wordcloud 0.1ver 요구 사항__ 
 >
 > *  __docker image 다운로드__ 
 >      * docker hub url : https://hub.docker.com/search?q=jisoo040310
@@ -27,6 +27,21 @@
 >   * __web server__ :    
       <code>docker run -it --rm -p 8080:9988 --name web_server --link db_server_container:master jisoo040310/last_dockerweb_server </code>
 
+## 
+> __wordcloud 0.2ver 요구 사항__ 
+>
+> *  __docker image 다운로드__ 
+>      * docker hub url : https://hub.docker.com/search?q=jisoo040310
+>    * docker image 가져오는 명령어 
+>        * mysql   
+           <code> docker pull </code>(:latest <- 생략가능)  
+>        * web server  
+           <code> docker pull </code>(:latest <- 생략가능)
+> * __docker 실행 명령어__ 
+>   * __db server__ :  
+     <code>docker run -it --rm --name db_server_container -p 3306:3306  </code>  
+>   * __web server__ :    
+      <code>docker run -it --rm -p 8080:9988 --name web_server --link db_server_container:master  </code>
 
 ## 
 > __주요 기능__
