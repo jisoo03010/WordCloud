@@ -12,7 +12,7 @@
 > 또한 단어의 크기는 많이 언급되는 순서대로 한눈에 들어올 수 있게 하였다.__  
 
 ## 
-> __요구 사항__ 
+> __ wordcloud 0.1ver 요구 사항__ 
 >
 > *  __docker image 다운로드__ 
 >      * docker hub url : https://hub.docker.com/search?q=jisoo040310
