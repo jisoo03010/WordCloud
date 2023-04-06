@@ -10,20 +10,8 @@ $(document).ready(function () {
         if (key.keyCode == 13) {
             var keyword = $("#inputText").val()
 
-            let today = new Date();
-            let hours = today.getHours(); //시
-            let minutes = today.getMinutes(); //분
-            let seconds = today.getSeconds(); //초
-            console.log(hours + ' : ' + minutes + ' : ' + seconds);
-
-            let time  = localStorage.getItem("time");
-
-
-
             var postdata = {
-                'keyword': keyword,
-                'before_key': before_key,
-                'timed' : time
+                'keyword': keyword
             }
             let asdf = []
 
@@ -49,12 +37,6 @@ $(document).ready(function () {
                             asdf.push(putdata)
                         }
                         localStorage.setItem("key", asdf);
-                       
-                                    
-                        localStorage.setItem("time", hours + ':' + minutes + ':' + seconds);
-                        
-
-                        localStorage.setItem("before_key", $("#inputText").val().replace(/ /g, ''));
                         
                         if (key.keyCode == 13) {
                             console.log("click함")
@@ -68,8 +50,13 @@ $(document).ready(function () {
                     }
                 })
 
+                        
+                
             }
         }
+
+        
+
     });
     // 전 데이터 새로고침 후에도 유지하기 ( 데이터 테이블  & 이미지 )
 
@@ -83,10 +70,6 @@ $(document).ready(function () {
     $("#wordcloud_img").attr("src", "../static/images/wordcloud_img.png");
     $("#wordcloud_img").width('100%');
 
-    let before_key = localStorage.getItem("before_key");
-
-    console.log("keyword : ", keyword)
-    console.log("before_key : ", before_key)
 
 })
 
