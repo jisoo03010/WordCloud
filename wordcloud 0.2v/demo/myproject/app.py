@@ -3,7 +3,6 @@ import json
 from sqlalchemy import create_engine
 from PIL import Image
 import requests
-from PIL import Image  # 이미지를 위한 라이브
 from flask import Flask, render_template, request, jsonify
 import pymysql
 from flask_sqlalchemy import SQLAlchemy
@@ -14,6 +13,8 @@ import matplotlib.pyplot as plt
 from fake_useragent import UserAgent
 import ssl
 from datetime import datetime
+
+from konlpy.tag import Okt
  
 import io
 #from nltk.stem import PorterStemmer, LancasterStemmer
@@ -22,6 +23,11 @@ db = SQLAlchemy()
 app = Flask(__name__) 
 # ======== rest api & 함수 ========
 
+global hostname 
+global portnumber 
+#"wordhost"
+hostname = "localhost"
+portnumber = 3307
 # /  : html template 보여줌
 @app.route('/')
 def index():
@@ -30,8 +36,8 @@ def index():
 # ======== 크롤링 데이터 저장 ========
 def insertDB(k, t, c1, c2, r):
     ret = []
-    db = pymysql.connect(host='localhost', user='root',
-                            port=3307 ,password='1234', charset='utf8', db='mydb')
+    db = pymysql.connect(host=hostname, user='root',
+                            port=portnumber ,password='1234', charset='utf8', db='mydb')
     curs = db.cursor()
     sqlInsert = """
         REPLACE  into mydb.crawlingnaverarticles2( keyword, title, contents, change_contents, registration_date, now_time) values( '{keyword1}' ,  '{title1}','{contents1}', '{contents2}',  '{registration_date}',  date_format(now(), '%Y%m%d%H%i%s') );
@@ -44,8 +50,8 @@ def insertDB(k, t, c1, c2, r):
 # ======== 캐싱 데이터 저장 ========
 def chcingDataInsertDB(key , encode, textdata):
     ret = []
-    db = pymysql.connect(host='localhost', user='root',
-                            port=3307 ,password='1234', charset='utf8', db='mydb')
+    db = pymysql.connect(host=hostname, user='root',
+                            port=portnumber ,password='1234', charset='utf8', db='mydb')
     curs = db.cursor()
 
     # 같은 키워드가 있을때 덮어쓰기해서 데이터 저장
@@ -79,8 +85,8 @@ def selectDB(key, sqlInsert, num):
     print("key잘 받아왔습니다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     print("keywrod : " , key)
     ret = []
-    db = pymysql.connect(host='localhost', user='root',
-                            port=3307 ,password='1234', charset='utf8', db='mydb')
+    db = pymysql.connect(host=hostname, user='root',
+                            port=portnumber ,password='1234', charset='utf8', db='mydb')
     curs = db.cursor()
    
     
@@ -134,13 +140,11 @@ def selectDB(key, sqlInsert, num):
         print(textData)
         # 이미지 데이터 저장하는 부분
         # 이미지를 인코딩 한 값과 50위 안에 드는 키워드를 db에 저장
+        word(text1) 
         with open('C:/Users/DataCentric/Desktop/WordCloud_Project/demo/myproject/static/images/wordcloud_img.png', mode='rb') as file:
             image = file.read()
             chcingDataInsertDB( key, image, json_data)
             
-        db.commit()
-        db.close()
-        word(text1) 
         print("\n================================ 성공적으로 select메서드가 마무리 되었습니다")        
         
 
@@ -151,8 +155,8 @@ def selectDB(key, sqlInsert, num):
         ret2 = []
         for i in curs:
             # 바이너리 데이터를 이미지로 변환
-            image = io.BytesIO(i[1])
-            byteImg = Image.open(image)
+            image_byte = io.BytesIO(i[1])
+            byteImg = Image.open(image_byte)
             byteImg.save('C:/Users/DataCentric/Desktop/WordCloud_Project/demo/myproject/static/images/wordcloud_img.png')
             # 이미지 파일로 저장
             ret2.append(i[0])
@@ -172,8 +176,8 @@ def selectDB(key, sqlInsert, num):
 # ======== image 테이블에 저장할때 등록되는 시간 가져옴 ========
 def time_data_select(key):
     print("time_data_select 실행중,, ")
-    db = pymysql.connect(host='localhost', user='root',
-                            port=3307 ,password='1234', charset='utf8', db='mydb')
+    db = pymysql.connect(host=hostname, user='root',
+                            port=portnumber ,password='1234', charset='utf8', db='mydb')
     curs = db.cursor()
 
     table_name = 'images'
@@ -192,6 +196,7 @@ def time_data_select(key):
 @app.route('/text',  methods=["POST"]) #  html 에서 받은 키워드 python으로 받기 위함
 def crolling():   
     print(" text 실행중,,,,, ")
+    print(os.getcwd())
     ssl._create_default_https_context = ssl._create_unverified_context
     user_agent = UserAgent()
     headers = {'User-Agent': user_agent.random}

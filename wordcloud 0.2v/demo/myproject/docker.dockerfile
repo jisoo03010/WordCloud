@@ -14,25 +14,27 @@
 #COPY  mydb_crawlingnaverarticles2.sql /docker-entrypoint-initdb.d 
 
 
+FROM python:3.10.5-slim
+RUN  apt-get update
 
-
-FROM python:3.10
-# 필요한 패키지 설치
-RUN apt-get update && \
-    apt-get install -y python3-venv
-
-# 작업 디렉토리 설정
+COPY . /app
 WORKDIR /app
 
-# 소스 코드 복사
-COPY . .
 
-# 가상환경 생성 및 활성화
-RUN python3 -m venv env
-ENV PATH="/app/env/bin:$PATH"
+RUN apt-get install -y default-jdk default-jre
+RUN pip3 install requests
+RUN pip3 install fake_useragent
+RUN pip3 install bs4
+RUN pip3 install flask
+RUN pip3 install wordcloud
+RUN pip3 install selenium  
+RUN pip3 install konlpy  
+RUN pip3 install numpy  
+RUN pip3 install pandas  
+RUN pip3 install pymysql  
+RUN pip3 install flask_sqlalchemy  
+RUN pip3 install matplotlib  
+RUN pip3 install nltk 
+RUN pip3 install cryptography 
 
-# 필요한 라이브러리 설치
-RUN pip install -r requirements.txt
-
-# 컨테이너 실행 시 실행할 명령어 설정
-CMD ["/bin/bash" , "-c" , "python app.py"] 
+ENTRYPOINT python app.py
