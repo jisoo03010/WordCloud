@@ -13,14 +13,15 @@ import matplotlib.pyplot as plt
 from fake_useragent import UserAgent
 import ssl
 from datetime import datetime
-
 from konlpy.tag import Okt
- 
+import base64
 import io
 #from nltk.stem import PorterStemmer, LancasterStemmer
 #from sklearn.feature_extraction.text import CountVectorizer
 db = SQLAlchemy()
 app = Flask(__name__) 
+app
+
 # ======== rest api & 함수 ========
 
 global hostname 
@@ -55,29 +56,36 @@ def chcingDataInsertDB(key , encode, textdata):
     curs = db.cursor()
 
     # 같은 키워드가 있을때 덮어쓰기해서 데이터 저장
-    curs.execute("REPLACE into images(keyword, image_data, text_data, time_data) values( %s , %s ,  %s, %s) ;", (key, encode, textdata, datetime.now() ))
+    print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    curs.execute("REPLACE into images(keyword, image_data, text_data, time_data) values( %s , %s ,  %s, %s) ;", (key, encode, textdata, datetime.now().strftime("%Y-%m-%d %H:%M:%S") ))
     db.commit()
     print("chcingDataInsertDB insert 실행되었습니다!!1--------------")
     return ret
 
 # ======== 워드 클라우드 이미지 생성 ========
+wordcloud_arr = []
 def word(text):
     
     wordcloud = WordCloud(font_path="./static/malgun.ttf",max_words=100, width = 800 , height = 400 ,background_color='white').generate(text)
     
     print("================================ 성공적으로 wordcloud가 실행 되었습니다")
-    file = "C:/Users/DataCentric/Desktop/WordCloud_Project/demo/myproject/static/images/wordcloud_img.png"
-    if os.path.isfile("C:/Users/DataCentric/Desktop/WordCloud_Project/demo/myproject/static/images/wordcloud_img.png"):
-        print("file이 있어요")
-        os.remove(file)
-    else :
-        print("file이 없어요 ")
+  
     
     plt.figure()
     plt.axis('off')
     plt.imshow(wordcloud, interpolation='bilinear')
 
-    plt.savefig("C:/Users/DataCentric/Desktop/WordCloud_Project/demo/myproject/static/images/wordcloud_img.png", bbox_inches='tight')
+    buf = io.BytesIO()
+    buf.seek(0)
+    
+    plt.savefig(buf, format='png')
+
+    buf.seek(0)
+    img_bytes = buf.read()
+
+    # 바이트 타입 출력
+    wordcloud_arr.append(img_bytes)
+    buf.close()
 
 
 # 크롤링 데이터를 select db  ============================
@@ -120,48 +128,46 @@ def selectDB(key, sqlInsert, num):
         social_news_word_count = Counter(strings)
         for i in social_news_word_count.most_common(50):
             test_list2.append(i)
+        word(text1) 
     
 
-        textData_arr1 = []
+        # Data URI scheme으로 변환
+        print(wordcloud_arr[0])
+        encoded_image = base64.b64encode(wordcloud_arr[0]).decode('ascii')
+        uri = 'data:image/png;base64,{}'.format(encoded_image)
+    
         jsonData_arr2= []
         for i in test_list2:
             caching_data = {
                 "keyword" : i[0],
-                "count" : i[1]
+                "count" : i[1],
+                "imgData" : uri
             }
             jsonData_arr2.append(caching_data)
-    
+
         json_data = json.dumps(jsonData_arr2, ensure_ascii=False)
  
 
-        print(json_data)
-        print(type(json_data))  
-        textData = ' '.join(textData_arr1)
-        print(textData)
         # 이미지 데이터 저장하는 부분
         # 이미지를 인코딩 한 값과 50위 안에 드는 키워드를 db에 저장
-        word(text1) 
-        with open('C:/Users/DataCentric/Desktop/WordCloud_Project/demo/myproject/static/images/wordcloud_img.png', mode='rb') as file:
-            image = file.read()
-            chcingDataInsertDB( key, image, json_data)
+        chcingDataInsertDB( key, wordcloud_arr[0], json_data)
+        
+        print(len(wordcloud_arr))
+        del wordcloud_arr[0]
+        print(wordcloud_arr)
             
         print("\n================================ 성공적으로 select메서드가 마무리 되었습니다")        
         
-
+        # 객체에 담아서 보내야 함 
         return jsonify(json_data)
         
     else:
+        print("\n\n=============================================ret2===================")
         print("10분 이내에 검색하고 키워드가 같으므로 기존에 있던 데이터를 그대로 가져옵니다.")
         ret2 = []
         for i in curs:
-            # 바이너리 데이터를 이미지로 변환
-            image_byte = io.BytesIO(i[1])
-            byteImg = Image.open(image_byte)
-            byteImg.save('C:/Users/DataCentric/Desktop/WordCloud_Project/demo/myproject/static/images/wordcloud_img.png')
-            # 이미지 파일로 저장
-            ret2.append(i[0])
-        print("\n\nret2===================")
-        print(ret2)
+            print(i[0])
+            ret2.append(i[0]) # 바이너리 타입 이미지도 같이 데이터를 보냄
         db.commit()
         db.close()
     
@@ -187,7 +193,7 @@ def time_data_select(key):
     query = f"SELECT count(*) FROM {table_name} WHERE TIMESTAMPDIFF(minute, {column_time_data_name}, NOW()) <= 60 and {column_keyword_name} = '{key}';"
     curs.execute(query)
     out = curs.fetchone()[0]
-    print("out : ", out)
+    # print("out : ", out)
     # 0 : false
     # 1 : true 
     return out
@@ -256,7 +262,6 @@ def crolling():
                         continue
             
     return selectDB(key, sqlInsert1, num)
-
 
 
 
