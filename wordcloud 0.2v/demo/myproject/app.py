@@ -20,7 +20,7 @@ import io
 #from sklearn.feature_extraction.text import CountVectorizer
 db = SQLAlchemy()
 app = Flask(__name__) 
-app
+
 
 # ======== rest api & 함수 ========
 
