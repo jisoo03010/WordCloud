@@ -34,14 +34,14 @@
 >      * docker hub url : https://hub.docker.com/search?q=jisoo040310
 >    * docker image 가져오는 명령어 
 >        * mysql   
-           <code> docker pull </code>(:latest <- 생략가능)  
+           <code> docker pull jisoo040310/wordcloud_mysql_server:0.2 </code> 
 >        * web server  
-           <code> docker pull </code>(:latest <- 생략가능)
+           <code> docker pull jisoo040310/wordcloud_web_server:0.2 </code>
 > * __docker 실행 명령어__ 
 >   * __db server__ :  
-     <code>docker run -it --rm --name db_server_container -p 3306:3306  </code>  
+     <code>docker run -it --rm --name mysql_server_last_container2 -e MYSQL_ROOT_PASSWORD=1234 -p localhost:3306:3306 jisoo040310/wordcloud_mysql_server:0.2 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci</code>  
 >   * __web server__ :    
-      <code>docker run -it --rm -p 8080:9988 --name web_server --link db_server_container:master  </code>
+      <code>docker run -it --rm -p 0.0.0.0:8080:9988 --name web_server --link mysql_server_last_container2:wordhost  jisoo040310/wordcloud_web_server:0.2  </code>
 
 ## 
 > __주요 기능__
