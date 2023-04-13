@@ -45,6 +45,7 @@ def insertDB(k, t, c1, c2, r):
         """.format(keyword1=k, title1=t, contents1=c1,  contents2=c2, registration_date=r )
     curs.execute(sqlInsert)
     db.commit()
+    db.closes() # 2023.4.13일에 수정함 
     #print("insert 실행되었습니다!!1--------------")
     return ret
 
@@ -59,6 +60,7 @@ def chcingDataInsertDB(key , encode, textdata):
     print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     curs.execute("REPLACE into images(keyword, image_data, text_data, time_data) values( %s , %s ,  %s, %s) ;", (key, encode, textdata, datetime.now().strftime("%Y-%m-%d %H:%M:%S") ))
     db.commit()
+    db.closes() # 2023.4.13일에 수정함 
     print("chcingDataInsertDB insert 실행되었습니다!!1--------------")
     return ret
 
@@ -168,10 +170,7 @@ def selectDB(key, sqlInsert, num):
         for i in curs:
             print(i[0])
             ret2.append(i[0]) # 바이너리 타입 이미지도 같이 데이터를 보냄
-        db.commit()
-        db.close()
-    
-
+         
         return ret2
         
 # ======== crolling() 메서드에서 사용, 검색한 키워드가 mydb.images table에 존재 하는가를 구분함 ========
