@@ -1,9 +1,9 @@
 # WordCloud
 
-## version 0.1 - ui image
+## 0.1 ver - UI/UX 
 ![image](https://user-images.githubusercontent.com/73218962/225527052-467be0a3-4f7a-429c-a984-1fedf1aed94d.png)
               
-## version 0.2 - ui image    
+## 0.2 ver - UI/UX     
 ![image](https://user-images.githubusercontent.com/73218962/229707768-8c97a318-57b1-4459-96af-d851e46682bd.png)
 
 > ### 프로젝트 소개  
